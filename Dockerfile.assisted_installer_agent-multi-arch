@@ -11,7 +11,7 @@ ENV GOFLAGS="-p=4"
 ENV GOEXPERIMENT=strictfipsruntime
 ENV BUILD_TAGS="strictfipsruntime"
 
-COPY . /app
+COPY --chown=${USER_UID} . /app
 WORKDIR /app
 RUN CGO_FLAG=1 make build
 
