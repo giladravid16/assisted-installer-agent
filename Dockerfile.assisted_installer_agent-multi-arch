@@ -16,7 +16,7 @@ WORKDIR /app
 RUN CGO_FLAG=1 make build
 
 
-FROM --platform=$BUILDPLATFORM registry.redhat.io/rhel9-2-els/rhel-minimal:9.2-86
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 
 ENV USER_UID=0
 
