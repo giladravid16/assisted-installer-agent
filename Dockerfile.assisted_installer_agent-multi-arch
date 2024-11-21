@@ -20,11 +20,6 @@ FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 
 ENV USER_UID=0
 
-RUN microdnf install -y subscription-manager && microdnf clean all && rm -rf /var/cache/{yum,dnf,microdnf}
-
-RUN subscription-manager repos --enable=codeready-builder-for-rhel-9-x86_64-rpms && \
-    subscription-manager repos --enable=rhocp-4.17-for-rhel-9-x86_64-rpms
-
 RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar openssh-clients chrony util-linux hwdata" && \
     X86_PKGS=$(if [ "$(uname -m)" == "x86_64" ]; then echo -n biosdevname dmidecode ; fi) && \
     ARM_PKGS=$(if [ "$(uname -m)" == "aarch64" ]; then echo -n dmidecode ; fi) && \
