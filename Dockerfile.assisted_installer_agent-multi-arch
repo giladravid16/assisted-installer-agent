@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM registry-proxy.engineering.redhat.com/rh-osbs/openshift-golang-builder:v1.22.7-202410111609.gc451559.el9 AS builder
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/go-toolset:1.21 AS builder
 ARG TARGETPLATFORM
 
 ENV USER_UID=1001 \
