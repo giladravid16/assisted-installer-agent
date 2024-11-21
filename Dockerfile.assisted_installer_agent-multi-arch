@@ -22,7 +22,7 @@ ENV USER_UID=0
 
 RUN microdnf -y update && microdnf clean all
 
-RUN subscription-manager repos --enable=codeready-builder-for-rhel-9-x86_64-rpms &&
+RUN subscription-manager repos --enable=codeready-builder-for-rhel-9-x86_64-rpms && \
     subscription-manager repos --enable=rhocp-4.17-for-rhel-9-x86_64-rpms
 
 RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar openssh-clients chrony util-linux hwdata" && \
