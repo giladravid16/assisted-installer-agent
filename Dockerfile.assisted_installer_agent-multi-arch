@@ -17,6 +17,8 @@ RUN CGO_FLAG=1 make build
 
 
 FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/ubi-minimal:9.4
+ARG release=main
+ARG version=latest
 
 ENV USER_UID=0
 
@@ -40,3 +42,21 @@ RUN ln -s /usr/bin/agent /usr/bin/free_addresses && \
     ln -s /usr/bin/agent /usr/bin/disk_speed_check
 
 USER ${USER_UID}
+
+LABEL com.redhat.component="multicluster-engine-assisted-installer-agent-container" \
+      name="multicluster-engine/assisted-installer-agent-rhel9" \
+      version="${version}" \
+      upstream-ref="${version}" \
+      upstream-url="https://github.com/openshift/assisted-installer-agent.git" \
+      summary="OpenShift Assisted Installer Agent" \
+      io.k8s.display-name="OpenShift Assisted Installer" \
+      maintainer="David Zager <dzager@redhat.com>" \
+      description="OpenShift Assisted Installer" \
+      io.k8s.description="OpenShift Assisted Installer" \
+      distribution-scope="public" \
+      release="${release}" \
+      vendor="Red Hat, Inc." \
+      upstream_commit="${version}" \
+      org.label-schema.vcs-ref="${version}" \
+      org.label-schema.vcs-url="https://github.com/openshift/assisted-installer-agent"
+
