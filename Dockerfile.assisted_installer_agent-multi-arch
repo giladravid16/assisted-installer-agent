@@ -16,7 +16,7 @@ WORKDIR /app
 RUN CGO_FLAG=1 make build
 
 
-FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/ubi-minimal:9.4
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/ubi:9.4
 ARG release=main
 ARG version=latest
 
@@ -27,10 +27,11 @@ RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar
     ARM_PKGS=$(if [ "$(uname -m)" == "aarch64" ]; then echo -n dmidecode ; fi) && \
     PPC64LE_PKGS=$(if [ "$(uname -m)" == "ppc64le" ]; then echo -n '' ; fi) && \
     S390X_PKGS=$(if [ "$(uname -m)" == "s390x" ]; then echo -n '' ; fi) && \
-    microdnf install -y $PKGS $X86_PKGS $ARM_PKGS $PPC64LE_PKGS $S390X_PKGS && \
-    microdnf update -y systemd && \
-    microdnf clean all && \
-    rm -rf /var/cache/{yum,dnf,microdnf}/*
+    subscription-manager refresh && \
+    dnf install -y $PKGS $X86_PKGS $ARM_PKGS $PPC64LE_PKGS $S390X_PKGS && \
+    dnf update -y systemd && \
+    dnf clean all && \
+    rm -rf /var/cache/{yum,dnf}/*
 
 COPY --from=builder /app/build/agent /usr/bin/agent
 
