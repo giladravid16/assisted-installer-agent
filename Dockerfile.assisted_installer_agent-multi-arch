@@ -13,14 +13,16 @@ ENV BUILD_TAGS="strictfipsruntime"
 
 COPY --chown=${USER_UID} . /app
 WORKDIR /app
+
+RUN go install github.com/google/go-licenses@v1.6.0
+RUN ${HOME}/go/bin/go-licenses save --save_path /tmp/licenses ./...
+
 RUN CGO_FLAG=1 make build
 
 
 FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/ubi:9.4
 ARG release=main
 ARG version=latest
-
-ENV USER_UID=0
 
 RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar openssh-clients chrony util-linux hwdata" && \
     X86_PKGS=$(if [ "$(uname -m)" == "x86_64" ]; then echo -n biosdevname dmidecode ; fi) && \
@@ -33,6 +35,7 @@ RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar
     dnf clean all && \
     rm -rf /var/cache/{yum,dnf}/*
 
+COPY --from=builder /tmp/licenses /licenses
 COPY --from=builder /app/build/agent /usr/bin/agent
 
 # The step binaries are all symlinks to /usr/bin/agent
@@ -41,8 +44,6 @@ RUN ln -s /usr/bin/agent /usr/bin/free_addresses && \
     ln -s /usr/bin/agent /usr/bin/logs_sender && \
     ln -s /usr/bin/agent /usr/bin/next_step_runner && \
     ln -s /usr/bin/agent /usr/bin/disk_speed_check
-
-USER ${USER_UID}
 
 LABEL com.redhat.component="multicluster-engine-assisted-installer-agent-container" \
       name="multicluster-engine/assisted-installer-agent-rhel9" \
