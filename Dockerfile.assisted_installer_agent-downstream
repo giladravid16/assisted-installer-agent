@@ -38,7 +38,7 @@ RUN INSTALL_PKGS="dhclient ipmitool sg3_utils file kmod findutils iputils nmap p
     ARM_PKGS=$(if [ "$(uname -m)" == "aarch64" ]; then echo -n dmidecode ; fi) && \
     PPC64LE_PKGS=$(if [ "$(uname -m)" == "ppc64le" ]; then echo -n '' ; fi) && \
     S390X_PKGS=$(if [ "$(uname -m)" == "s390x" ]; then echo -n '' ; fi) && \
-    subscription-manager refresh &&
+    subscription-manager refresh && \
     dnf install -y $INSTALL_PKGS $X86_PKGS $ARM_PKGS $PPC64LE_PKGS $S390X_PKGS && \
     dnf clean all && \
     rm -rf /var/cache/{yum,dnf}/* && \
