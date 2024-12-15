@@ -14,7 +14,7 @@ WORKDIR /app
 RUN make build
 
 RUN go install github.com/google/go-licenses@v1.6.0
-RUN ${HOME}/go/bin/go-licenses save --save_path /tmp/licenses ./...
+RUN ${GOPATH}/bin/go-licenses save --save_path /tmp/licenses ./...
 
 
 FROM --platform=$BUILDPLATFORM registry.redhat.io/rhel9-4-els/rhel:9.4
