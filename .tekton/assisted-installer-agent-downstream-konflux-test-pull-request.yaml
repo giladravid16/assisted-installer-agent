@@ -39,8 +39,6 @@ spec:
     - version={{revision}}
   - name: build-source-image
     value: "true"
-  - name: hermetic
-    value: "true"
   pipelineSpec:
     description: |
       This pipeline is ideal for building multi-arch container images from a Containerfile while maintaining trust after pipeline customization.
