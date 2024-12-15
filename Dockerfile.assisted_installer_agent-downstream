@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/go-toolset:1.21 AS builder
+FROM --platform=$BUILDPLATFORM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_1.21 AS builder
 ARG TARGETPLATFORM
 
 ENV USER_UID=1001 \
@@ -14,10 +14,10 @@ WORKDIR /app
 RUN make build
 
 RUN go install github.com/google/go-licenses@v1.6.0
-RUN ${HOME}/go/bin/go-licenses save --save_path /tmp/licenses ./...
+RUN ${GOPATH}/bin/go-licenses save --save_path /tmp/licenses ./...
 
 
-FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi9/ubi:9.4
+FROM --platform=$BUILDPLATFORM registry.redhat.io/rhel9-4-els/rhel:9.4
 ARG release=main
 ARG version=latest
 
