@@ -1,8 +1,0 @@
-{
-  "packageRules": [
-    {
-      "matchBaseBranches": ["konflux-test-2"],
-      "enabled": false
-    }
-  ]
-}
