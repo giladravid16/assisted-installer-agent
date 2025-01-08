@@ -14,8 +14,8 @@ ENV BUILD_TAGS="strictfipsruntime"
 COPY --chown=${USER_UID} . /app
 WORKDIR /app
 
-RUN go install github.com/google/go-licenses@v1.6.0
-RUN ${HOME}/go/bin/go-licenses save --save_path /tmp/licenses ./...
+#RUN go install github.com/google/go-licenses@v1.6.0
+#RUN ${HOME}/go/bin/go-licenses save --save_path /tmp/licenses ./...
 
 RUN CGO_FLAG=1 make build
 
@@ -35,7 +35,7 @@ RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar
     dnf clean all && \
     rm -rf /var/cache/{yum,dnf}/*
 
-COPY --from=builder /tmp/licenses /licenses
+#COPY --from=builder /tmp/licenses /licenses
 COPY --from=builder /app/build/agent /usr/bin/agent
 
 # The step binaries are all symlinks to /usr/bin/agent
