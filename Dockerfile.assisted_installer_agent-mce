@@ -29,7 +29,7 @@ RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar
     ARM_PKGS=$(if [ "$(uname -m)" == "aarch64" ]; then echo -n dmidecode ; fi) && \
     PPC64LE_PKGS=$(if [ "$(uname -m)" == "ppc64le" ]; then echo -n '' ; fi) && \
     S390X_PKGS=$(if [ "$(uname -m)" == "s390x" ]; then echo -n '' ; fi) && \
-    subscription-manager refresh && \
+    #subscription-manager refresh && \
     dnf install -y $PKGS $X86_PKGS $ARM_PKGS $PPC64LE_PKGS $S390X_PKGS && \
     dnf update -y systemd && \
     dnf clean all && \
