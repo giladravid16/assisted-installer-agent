@@ -14,8 +14,8 @@ ENV BUILD_TAGS="strictfipsruntime"
 COPY --chown=${USER_UID} . /app
 WORKDIR /app
 
-RUN go install github.com/google/go-licenses@v1.6.0
-RUN ${HOME}/go/bin/go-licenses save --save_path /tmp/licenses ./...
+#RUN go install github.com/google/go-licenses@v1.6.0
+#RUN ${HOME}/go/bin/go-licenses save --save_path /tmp/licenses ./...
 
 RUN CGO_FLAG=1 make build
 
@@ -29,13 +29,14 @@ RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar
     ARM_PKGS=$(if [ "$(uname -m)" == "aarch64" ]; then echo -n dmidecode ; fi) && \
     PPC64LE_PKGS=$(if [ "$(uname -m)" == "ppc64le" ]; then echo -n '' ; fi) && \
     S390X_PKGS=$(if [ "$(uname -m)" == "s390x" ]; then echo -n '' ; fi) && \
-    subscription-manager refresh && \
+    #subscription-manager refresh && \
     dnf install -y $PKGS $X86_PKGS $ARM_PKGS $PPC64LE_PKGS $S390X_PKGS && \
     dnf update -y systemd && \
     dnf clean all && \
     rm -rf /var/cache/{yum,dnf}/*
 
-COPY --from=builder /tmp/licenses /licenses
+#COPY --from=builder /tmp/licenses /licenses
+COPY LICENSE /licenses/
 COPY --from=builder /app/build/agent /usr/bin/agent
 
 # The step binaries are all symlinks to /usr/bin/agent
@@ -57,6 +58,7 @@ LABEL com.redhat.component="multicluster-engine-assisted-installer-agent-contain
       io.k8s.description="OpenShift Assisted Installer" \
       distribution-scope="public" \
       release="${release}" \
+      io.openshift.tags="OpenShift 4" \
       vendor="Red Hat, Inc." \
       upstream_commit="${version}" \
       org.label-schema.vcs-ref="${version}" \
