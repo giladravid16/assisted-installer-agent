@@ -36,6 +36,7 @@ RUN PKGS="findutils iputils podman ipmitool file sg3_utils fio nmap dhclient tar
     rm -rf /var/cache/{yum,dnf,microdnf}/*
 
 #COPY --from=builder /tmp/licenses /licenses
+COPY LICENSE /licenses/
 COPY --from=builder /app/build/agent /usr/bin/agent
 
 # The step binaries are all symlinks to /usr/bin/agent
@@ -57,6 +58,7 @@ LABEL com.redhat.component="multicluster-engine-assisted-installer-agent-contain
       io.k8s.description="OpenShift Assisted Installer" \
       distribution-scope="public" \
       release="${release}" \
+      io.openshift.tags="OpenShift 4" \
       vendor="Red Hat, Inc." \
       upstream_commit="${version}" \
       org.label-schema.vcs-ref="${version}" \
