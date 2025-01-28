@@ -14,3 +14,4 @@ filters:
   ^Dockerfile\.ocp:
     approvers:
       - agent_team
+
