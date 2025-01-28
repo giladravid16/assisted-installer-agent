@@ -16,3 +16,4 @@ env:
     SKIP: $SKIP
     CI: $CI
     GOCACHE: "/go/pkg/mod"
+
