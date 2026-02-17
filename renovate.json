@@ -9,7 +9,8 @@
     "prConcurrentLimit": 0,
     "enabledManagers": [
         "custom.regex",
-        "tekton"
+        "tekton",
+        "rpm"
     ],
     "tekton": {
         "managerFilePatterns": [
@@ -118,6 +119,12 @@
             "matchManagers": [
                 "tekton"
             ]
+        },
+        {
+            "groupName": "RPM lockfile refresh",
+            "addLabels": ["konflux"],
+            "schedule": ["at any time"],
+            "matchManagers": ["rpm"]
         }
     ]
 }
