@@ -17,6 +17,11 @@
             "/^.tekton/*/"
         ]
     },
+    "rpm": {
+        "managerFilePatterns": [
+            "/(^|/)rpms\\.in\\.ya?ml$/"
+        ]
+    },
     "customManagers": [
         {
             "customType": "regex",
