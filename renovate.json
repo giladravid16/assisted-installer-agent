@@ -132,10 +132,19 @@
         },
         {
             "groupName": "RPM lockfile refresh",
-            "addLabels": ["konflux"],
-            "schedule": ["at any time"],
-            "matchManagers": ["rpm-lockfile"],
-            "matchPaths": ["rpm-prefetching/rpms.lock.yaml", "rpm-prefetching/rpms.in.yaml"]
+            "addLabels": [
+                "konflux"
+            ],
+            "schedule": [
+                "at any time"
+            ],
+            "matchManagers": [
+                "rpm-lockfile"
+            ],
+            "matchFileNames": [
+                "rpm-prefetching/rpms.lock.yaml",
+                "rpm-prefetching/rpms.in.yaml"
+            ]
         }
     ]
 }
