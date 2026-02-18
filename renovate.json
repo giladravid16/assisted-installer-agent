@@ -17,16 +17,6 @@
             "/^.tekton/*/"
         ]
     },
-    "rpm-lockfile": {
-        "managerFilePatterns": [
-            "/(^|/)rpms\\.in\\.ya?ml$/",
-            "rpm-prefetching/rpms.in.yaml",
-            "rpm-prefetching/rpms.lock.yaml"
-        ],
-        "includePaths": [
-            "rpm-prefetching/**"
-        ]
-    },
     "customManagers": [
         {
             "customType": "regex",
@@ -132,10 +122,15 @@
         },
         {
             "groupName": "RPM lockfile refresh",
-            "addLabels": ["konflux"],
-            "schedule": ["at any time"],
-            "matchManagers": ["rpm-lockfile"],
-            "matchPaths": ["rpm-prefetching/rpms.lock.yaml", "rpm-prefetching/rpms.in.yaml"]
+            "addLabels": [
+                "konflux"
+            ],
+            "schedule": [
+                "at any time"
+            ],
+            "matchManagers": [
+                "rpm-lockfile"
+            ]
         }
     ]
 }
